@@ -41,7 +41,7 @@ namespace ScoreboardTests
             Assert.NotNull(addedGame);
             Assert.Equal(home, addedGame.HomeTeam);
             Assert.Equal(away, addedGame.AwayTeam);
-            Assert.Equal(0, addedGame.TotalScore);
+            Assert.Equal((uint)0, addedGame.TotalScore);
         }
 
         [Fact]
@@ -136,8 +136,8 @@ namespace ScoreboardTests
             gameService.Update(game.Id, 4, 5);
 
             // Then
-            Assert.Equal(4, game.HomeScore);
-            Assert.Equal(5, game.AwayScore);
+            Assert.Equal((uint)4, game.HomeScore);
+            Assert.Equal((uint)5, game.AwayScore);
         }
 
         [Fact]

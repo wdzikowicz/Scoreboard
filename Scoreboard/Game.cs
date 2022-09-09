@@ -9,11 +9,11 @@ namespace Scoreboard
         public string AwayTeam { get; private set; }
 
         public DateTime CreatedOn { get; private set; }
-        public int HomeScore { get; set; }
-        public int AwayScore { get; set; }
-        public int TotalScore => HomeScore + AwayScore;
+        public uint HomeScore { get; set; }
+        public uint AwayScore { get; set; }
+        public uint TotalScore => HomeScore + AwayScore;
 
-        public Game(string homeTeam, string awayTeam, int homeScore, int awayScore) : this(homeTeam, awayTeam)
+        public Game(string homeTeam, string awayTeam, uint homeScore, uint awayScore) : this(homeTeam, awayTeam)
         {
             this.HomeScore = homeScore;
             this.AwayScore = awayScore;

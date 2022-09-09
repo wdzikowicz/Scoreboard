@@ -40,7 +40,7 @@ namespace Scoreboard
             Scoreboard.Remove(game);
         }
 
-        public void Update(Guid gameId, int homeScore, int awayScore)
+        public void Update(Guid gameId, uint homeScore, uint awayScore)
         {
             var game = this.Scoreboard.Find(g => g.Id == gameId);
 
