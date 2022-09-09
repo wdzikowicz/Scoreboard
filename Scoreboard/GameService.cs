@@ -39,6 +39,19 @@ namespace Scoreboard
             Scoreboard.Remove(game);
         }
 
+        public void Update(Guid gameId, int homeScore, int awayScore)
+        {
+            var game = this.Scoreboard.Find(g => g.Id == gameId);
+
+            if (game == null)
+            {
+                throw new KeyNotFoundException($"Game with id {gameId} doesnt exist or it's already finished.");
+            }
+
+            game.HomeScore = homeScore;
+            game.AwayScore = awayScore;
+        }
+
         public void Summary()
         {
 
