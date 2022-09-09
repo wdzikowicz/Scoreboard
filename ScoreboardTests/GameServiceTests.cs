@@ -139,5 +139,29 @@ namespace ScoreboardTests
             Assert.Equal(4, game.HomeScore);
             Assert.Equal(5, game.AwayScore);
         }
+
+        [Fact]
+        public void SummaryReturnsScoreboardSortedByTotalScoreAndCreationTimeTest()
+        {
+            // Given
+            var game1 = new Game("Mexico", "Canada", 0, 5);
+            var game2 = new Game("Spain", "Brazil", 10, 2);
+            var game3 = new Game("Germany", "France", 2, 2);
+            var game4 = new Game("Uruguay", "Italy", 6, 6);
+            var game5 = new Game("Argentina", "Australia", 3, 1);
+
+            var games = new List<Game> { game1, game2, game3, game4, game5 };
+            var gameService = new GameService(games);
+
+            // When
+            var scoreboard = gameService.Summary();
+
+            // Then
+            Assert.Equal(game4.Id, scoreboard[0].Id);
+            Assert.Equal(game2.Id, scoreboard[1].Id);
+            Assert.Equal(game1.Id, scoreboard[2].Id);
+            Assert.Equal(game5.Id, scoreboard[3].Id);
+            Assert.Equal(game3.Id, scoreboard[4].Id);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Scoreboard
 {
@@ -52,9 +53,9 @@ namespace Scoreboard
             game.AwayScore = awayScore;
         }
 
-        public void Summary()
+        public List<Game> Summary()
         {
-
+            return Scoreboard.OrderByDescending(g => g.TotalScore).ThenByDescending(g => g.CreatedOn).ToList();
         }
 
         private static void ValidateStartParameters(string homeTeam, string awayTeam)
