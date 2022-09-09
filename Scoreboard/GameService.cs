@@ -3,58 +3,58 @@ using System.Collections.Generic;
 
 namespace Scoreboard
 {
-  public class GameService
-  {
-    private List<Game> Scoreboard;
-
-    public GameService()
+    public class GameService
     {
-      this.Scoreboard = new List<Game>();
-    }
+        private readonly List<Game> Scoreboard;
 
-    public GameService(List<Game> games)
-    {
-      this.Scoreboard = games;
-    }
-
-    public Guid Start(string homeTeam, string awayTeam)
-    {
-      ValidateStartParameters(homeTeam, awayTeam);
-
-      var game = new Game(homeTeam, awayTeam);
-      this.Scoreboard.Add(game);
-
-      return game.Id;
-    }
-
-    public void Finish(Guid gameId)
-    {
-        var game = this.Scoreboard.Find(g => g.Id == gameId);
-
-        if (game == null)
+        public GameService()
         {
-            throw new KeyNotFoundException($"Game with id {gameId} doesnt exist or it's already finished.");
+            this.Scoreboard = new List<Game>();
         }
 
-        Scoreboard.Remove(game);
+        public GameService(List<Game> games)
+        {
+            this.Scoreboard = games;
+        }
+
+        public Guid Start(string homeTeam, string awayTeam)
+        {
+            ValidateStartParameters(homeTeam, awayTeam);
+
+            var game = new Game(homeTeam, awayTeam);
+            this.Scoreboard.Add(game);
+
+            return game.Id;
+        }
+
+        public void Finish(Guid gameId)
+        {
+            var game = this.Scoreboard.Find(g => g.Id == gameId);
+
+            if (game == null)
+            {
+                throw new KeyNotFoundException($"Game with id {gameId} doesnt exist or it's already finished.");
+            }
+
+            Scoreboard.Remove(game);
+        }
+
+        public void Summary()
+        {
+
+        }
+
+        private static void ValidateStartParameters(string homeTeam, string awayTeam)
+        {
+            if (string.IsNullOrEmpty(homeTeam))
+            {
+                throw new ArgumentNullException(homeTeam);
+            }
+            if (string.IsNullOrEmpty(awayTeam))
+            {
+                throw new ArgumentNullException(awayTeam);
+            }
+
+        }
     }
-
-    public void Summary()
-    {
-
-    }
-
-    private void ValidateStartParameters(string homeTeam, string awayTeam)
-    {
-      if(string.IsNullOrEmpty(homeTeam))
-      {
-        throw new ArgumentNullException(homeTeam);
-      }
-      if(string.IsNullOrEmpty(awayTeam))
-      {
-        throw new ArgumentNullException(awayTeam);
-      }
-
-    }
-  }
 }
