@@ -13,18 +13,14 @@ namespace Scoreboard
         public uint AwayScore { get; set; }
         public uint TotalScore => HomeScore + AwayScore;
 
-        public Game(string homeTeam, string awayTeam, uint homeScore, uint awayScore) : this(homeTeam, awayTeam)
-        {
-            this.HomeScore = homeScore;
-            this.AwayScore = awayScore;
-        }
-
-        public Game(string homeTeam, string awayTeam)
+        public Game(string homeTeam, string awayTeam, uint homeScore = 0, uint awayScore = 0)
         {
             this.Id = Guid.NewGuid();
             this.CreatedOn = DateTime.UtcNow;
             this.HomeTeam = homeTeam;
             this.AwayTeam = awayTeam;
+            this.HomeScore = homeScore;
+            this.AwayScore = awayScore;
         }
     }
 }

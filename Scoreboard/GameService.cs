@@ -30,24 +30,14 @@ namespace Scoreboard
 
         public void Finish(Guid gameId)
         {
-            var game = this.Scoreboard.Find(g => g.Id == gameId);
-
-            if (game == null)
-            {
-                throw new KeyNotFoundException($"Game with id {gameId} doesnt exist or it's already finished.");
-            }
+            var game = this.GetGameById(gameId);
 
             Scoreboard.Remove(game);
         }
 
         public void Update(Guid gameId, uint homeScore, uint awayScore)
         {
-            var game = this.Scoreboard.Find(g => g.Id == gameId);
-
-            if (game == null)
-            {
-                throw new KeyNotFoundException($"Game with id {gameId} doesnt exist or it's already finished.");
-            }
+            var game = this.GetGameById(gameId);
 
             game.HomeScore = homeScore;
             game.AwayScore = awayScore;
@@ -68,7 +58,18 @@ namespace Scoreboard
             {
                 throw new ArgumentNullException(awayTeam);
             }
+        }
 
+        private Game GetGameById(Guid gameId)
+        {
+            var game = this.Scoreboard.Find(g => g.Id == gameId);
+
+            if (game == null)
+            {
+                throw new KeyNotFoundException($"Game with id {gameId} doesnt exist or it's already finished.");
+            }
+
+            return game;
         }
     }
 }
