@@ -60,8 +60,8 @@ namespace ScoreboardTests
             Assert.Equal("Value cannot be null.", exception.Message);
         }
 
-                [Fact]
-        public void StartThrowsEArgumentExceptionWhenAwayTeamNameIsNotProvidedTest()
+        [Fact]
+        public void StartThrowsArgumentExceptionWhenAwayTeamNameIsNotProvidedTest()
         {
             // Given
             string home = "Poland";
@@ -75,6 +75,37 @@ namespace ScoreboardTests
             // Then
             var exception = Assert.Throws<System.ArgumentNullException>(act);
             Assert.Equal("Value cannot be null.", exception.Message);
+        }
+
+        [Fact]
+        public void FinishThrowsKeyNotFoundExceptionWhenGameWithProvidedIdDoesntExistTest()
+        {
+            // Given
+            var gameService = new GameService();
+
+            // When
+            Action act = () => gameService.Finish(Guid.Empty);
+
+            // Then
+            var exception = Assert.Throws<KeyNotFoundException>(act);
+            Assert.Equal($"Game with id {Guid.Empty} doesnt exist or it's already finished.", exception.Message);
+        }
+
+        [Fact]
+        public void FinishRemovesGameFromScoreboardByProviedIdTest()
+        {
+            // Given
+            var game = new Game("Poland", "Germany");
+
+            var games = new List<Game> { game };
+            var gameService = new GameService(games);
+
+            // When
+            gameService.Finish(game.Id);
+
+            // Then
+            var gameExists = games.Exists(g => g.Id == game.Id);
+            Assert.False(gameExists);
         }
     }
 }

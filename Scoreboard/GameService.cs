@@ -5,16 +5,16 @@ namespace Scoreboard
 {
   public class GameService
   {
-    private List<Game> Games;
+    private List<Game> Scoreboard;
 
     public GameService()
     {
-      this.Games = new List<Game>();
+      this.Scoreboard = new List<Game>();
     }
 
     public GameService(List<Game> games)
     {
-      this.Games = games;
+      this.Scoreboard = games;
     }
 
     public Guid Start(string homeTeam, string awayTeam)
@@ -22,14 +22,21 @@ namespace Scoreboard
       ValidateStartParameters(homeTeam, awayTeam);
 
       var game = new Game(homeTeam, awayTeam);
-      this.Games.Add(game);
+      this.Scoreboard.Add(game);
 
       return game.Id;
     }
 
-    public void Finish()
+    public void Finish(Guid gameId)
     {
+        var game = this.Scoreboard.Find(g => g.Id == gameId);
 
+        if (game == null)
+        {
+            throw new KeyNotFoundException($"Game with id {gameId} doesnt exist or it's already finished.");
+        }
+
+        Scoreboard.Remove(game);
     }
 
     public void Summary()
