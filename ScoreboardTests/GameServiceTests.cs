@@ -79,6 +79,23 @@ namespace ScoreboardTests
         }
 
         [Fact]
+        public void StartThrowsArgumentExceptionWhenTeamNamesAreTheSameTest()
+        {
+            // Given
+            string home = "Poland";
+            string away = "Poland";
+            var games = new List<Game>();
+            var gameService = new GameService(games);
+
+            // When
+            void act() => gameService.Start(home, away);
+
+            // Then
+            var exception = Assert.Throws<System.ArgumentException>(act);
+            Assert.Equal("The teams' names in the game have to different.", exception.Message);
+        }
+
+        [Fact]
         public void FinishThrowsKeyNotFoundExceptionWhenGameWithProvidedIdDoesntExistTest()
         {
             // Given

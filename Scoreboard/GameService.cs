@@ -58,6 +58,10 @@ namespace Scoreboard
             {
                 throw new ArgumentNullException(awayTeam);
             }
+            if (string.Equals(homeTeam, awayTeam, StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new ArgumentException("The teams' names in the game have to different.");
+            }
         }
 
         private Game GetGameById(Guid gameId)
